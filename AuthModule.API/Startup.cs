@@ -30,66 +30,66 @@ namespace AuthModule.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("Default");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             var currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
             
             // DbContext
-            services.AddDbContext<IdentityDbContext>(options => {
-                options.UseSqlServer(connectionString, obj => {
-                    obj.MigrationsAssembly(currentAssemblyName);
-                });
-            });
+            //services.AddDbContext<IdentityDbContext>(options => {
+            //    options.UseSqlServer(connectionString, obj => {
+            //        obj.MigrationsAssembly(currentAssemblyName);
+            //    });
+            //});
 
-            // Identity
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                options.Password = new PasswordOptions
-                {
-                    RequireDigit = false,
-                    RequiredLength = 4,
-                    RequiredUniqueChars = 4,
-                    RequireUppercase = true
-                };
-                options.User = new UserOptions
-                {
-                    RequireUniqueEmail = true
-                };
-                options.SignIn = new SignInOptions
-                {
-                    RequireConfirmedEmail = false,
-                    RequireConfirmedPhoneNumber = false
-                };
-                options.Lockout = new LockoutOptions
-                {
-                    AllowedForNewUsers = false,
-                    DefaultLockoutTimeSpan = new System.TimeSpan(0,15,0),
-                    MaxFailedAccessAttempts = 3
-                };
-            })
-            .AddEntityFrameworkStores<IdentityDbContext>()
-            .AddDefaultTokenProviders();
+            //// Identity
+            //services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            //{
+            //    options.Password = new PasswordOptions
+            //    {
+            //        RequireDigit = false,
+            //        RequiredLength = 4,
+            //        RequiredUniqueChars = 4,
+            //        RequireUppercase = true
+            //    };
+            //    options.User = new UserOptions
+            //    {
+            //        RequireUniqueEmail = true
+            //    };
+            //    options.SignIn = new SignInOptions
+            //    {
+            //        RequireConfirmedEmail = false,
+            //        RequireConfirmedPhoneNumber = false
+            //    };
+            //    options.Lockout = new LockoutOptions
+            //    {
+            //        AllowedForNewUsers = false,
+            //        DefaultLockoutTimeSpan = new System.TimeSpan(0,15,0),
+            //        MaxFailedAccessAttempts = 3
+            //    };
+            //})
+            //.AddEntityFrameworkStores<IdentityDbContext>()
+            //.AddDefaultTokenProviders();
 
-            // CORS
-            services.AddCors(options=> {
-                options.AddPolicy("CorsPolicy", cors=>{
-                    cors.AllowAnyHeader();
-                    cors.AllowAnyMethod();
-                    cors.AllowAnyOrigin();
-                });
-            });
+            //// CORS
+            //services.AddCors(options=> {
+            //    options.AddPolicy("CorsPolicy", cors=>{
+            //        cors.AllowAnyHeader();
+            //        cors.AllowAnyMethod();
+            //        cors.AllowAnyOrigin();
+            //    });
+            //});
 
- services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Logins/Index";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = "/Logins/Index";
+            //});
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("EditorOver18Policy", policy =>
-                {
-                    policy.RequireClaim("Over18Claim");//.RequireRole("Editor");
-                });
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("EditorOver18Policy", policy =>
+            //    {
+            //        policy.RequireClaim("Over18Claim");//.RequireRole("Editor");
+            //    });
+            //});
 
             // services.AddSingleton<IEmail, SmtpEmail>();
             // services.AddAuthentication().AddFacebook(options => {
@@ -121,7 +121,7 @@ namespace AuthModule.API
             app.UseStaticFiles();
             app.UseSession();
              //app.UseCors("CorsPolicy");
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseMvc();
             // app.UseMvc(routes =>
             // {
